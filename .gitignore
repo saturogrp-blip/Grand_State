@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+*.log
+*.lock
+questions-db.json
+.DS_Store
+dist/
+build/

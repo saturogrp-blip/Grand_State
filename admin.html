@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Grand Interview</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0;
+            margin: 0;
+        }
+
+        .admin-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-container {
+            flex: 1;
+            max-width: 100%;
+            padding: 2rem 3rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 2rem;
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(11, 102, 194, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .admin-title-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .admin-title-section h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
+        }
+
+        .admin-title-section p {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .admin-header-right {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .btn-action:hover {
+            border-color: #0b66c2;
+            background: rgba(11, 102, 194, 0.05);
+            box-shadow: 0 0 10px rgba(11, 102, 194, 0.5), inset 0 0 10px rgba(11, 102, 194, 0.1);
+        }
+
+        .btn-action.danger {
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .btn-action.danger:hover {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.05);
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.6), inset 0 0 10px rgba(220, 53, 69, 0.1);
+        }
+
+        .btn-primary-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.4rem;
+            background: transparent;
+            color: #0b66c2;
+            border: 1.5px solid #0b66c2;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary-action:hover {
+            background: rgba(11, 102, 194, 0.05);
+            border-color: #0b66c2;
+            box-shadow: 0 0 12px rgba(11, 102, 194, 0.4), inset 0 0 10px rgba(11, 102, 194, 0.08);
+        }
+
+        .btn-primary-action:active {
+            transform: translateY(0);
+        }
+
+        .tab-nav {
+            display: flex;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--input-border);
+            margin-bottom: 2rem;
+            padding-bottom: 0;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 0;
+            color: var(--muted);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.2s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            color: var(--text);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-content {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.hidden {
+            display: none;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 0.3rem 0;
+            color: var(--text);
+        }
+
+        .section-title p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .section-title-count {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-left: 0.5rem;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .questions-grid {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .question-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .question-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .drag-handle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            color: var(--muted);
+            cursor: grab;
+            flex-shrink: 0;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .question-text {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .question-number {
+            font-weight: 700;
+            color: var(--muted);
+            min-width: 2rem;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+        }
+
+        .btn-icon:hover {
+            color: white;
+            background: var(--danger);
+            transform: translateY(-2px);
+        }
+
+        .add-question-form {
+            background: var(--card-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            animation: slideInDown 0.3s ease;
+            max-height: 500px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .add-question-form.hidden {
+            display: none;
+            animation: slideOutUp 0.3s ease;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--input-text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.12s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(11, 102, 194, 0.1);
+            background: var(--surface);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: flex-end;
+        }
+
+        .org-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .org-card {
+            background: var(--surface);
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .org-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 22px var(--shadow);
+            transform: translateY(-3px);
+        }
+
+        .org-code {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .org-name {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .org-count {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .curator-section {
+            background: var(--card-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .curator-field {
+            margin-bottom: 0;
+        }
+
+        .curator-field label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .curator-field-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .curator-field-group input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--input-text);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .curator-field-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(11, 102, 194, 0.1);
+            background: var(--surface);
+            transform: scale(1.01);
+        }
+
+        .curator-field-group select {
+            flex: 1;
+            min-width: 0;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--input-text);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .curator-field-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(11, 102, 194, 0.1);
+            background: var(--surface);
+            transform: scale(1.01);
+        }
+
+        .curator-field-group .btn-primary-action {
+            flex-shrink: 0;
+        }
+
+        .curators-list {
+            background: var(--card-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .curator-list-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.8rem;
+            background: var(--surface);
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            animation: slideInLeft 0.3s ease forwards;
+        }
+
+        .curator-list-item:nth-child(1) { animation-delay: 0.05s; }
+        .curator-list-item:nth-child(2) { animation-delay: 0.1s; }
+        .curator-list-item:nth-child(3) { animation-delay: 0.15s; }
+        .curator-list-item:nth-child(4) { animation-delay: 0.2s; }
+        .curator-list-item:nth-child(5) { animation-delay: 0.25s; }
+
+        .curator-list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .curator-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #importFile {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+        }        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideOutUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        #curatorListContainer {
+            animation: slideInDown 0.4s ease;
+        }
+
+        #orgQuestionsContainer {
+            animation: slideInDown 0.4s ease;
+        }
+
+        .question-item {
+            animation: slideInLeft 0.3s ease forwards;
+        }
+
+        .question-item:nth-child(1) { animation-delay: 0.05s; }
+        .question-item:nth-child(2) { animation-delay: 0.1s; }
+        .question-item:nth-child(3) { animation-delay: 0.15s; }
+        .question-item:nth-child(4) { animation-delay: 0.2s; }
+        .question-item:nth-child(5) { animation-delay: 0.25s; }
+        .question-item:nth-child(6) { animation-delay: 0.3s; }
+        .question-item:nth-child(7) { animation-delay: 0.35s; }
+        .question-item:nth-child(n+8) { animation-delay: 0.4s; }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.hidden {
+            display: none;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 1001;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .modal-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        #questionsTextarea {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            padding: 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--input-text);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        #questionsTextarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(11, 102, 194, 0.1);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            border-top: 1px solid var(--input-border);
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 1rem;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .admin-header-right {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .tab-nav {
+                gap: 1rem;
+            }
+
+            .question-item {
+                grid-template-columns: auto 1fr auto;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="top-nav-inner">
+            <div class="brand">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <div style="width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1rem;">GI</div>
+                    <div>
+                        <div style="font-weight: 700; color: var(--text); font-size: 0.95rem;">Grand Interview</div>
+                        <div style="font-size: 0.75rem; color: var(--muted);">Question Management System</div>
+                    </div>
+                </div>
+            </div>
+            <nav class="top-links">
+                <a href="index.html" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1rem; border-radius: 8px; text-decoration: none; color: var(--text); transition: all 0.2s ease; font-weight: 600; font-size: 0.9rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 18 0A9 9 0 0 0 3 12Z"/><path d="M12 7v5l3 2"/>
+                    </svg>
+                    Home
+                </a>
+                <a href="admin.html" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1rem; border-radius: 8px; background: rgba(11, 102, 194, 0.15); text-decoration: none; color: var(--accent); font-weight: 700; font-size: 0.9rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="19.78" y1="4.22" x2="16.93" y2="7.07"/><line x1="7.07" y1="16.93" x2="4.22" y2="19.78"/>
+                    </svg>
+                    Admin
+                </a>
+            </nav>
+            <div class="top-actions">
+                <button id="themeToggleTop" style="background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px;" title="Toggle theme">
+                    ☀️
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-wrapper">
+        <div class="admin-container">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <div class="admin-header-left">
+                    <button class="back-btn" onclick="window.location.href='index.html';" title="Back">←</button>
+                    <div class="admin-title-section">
+                        <h1>Admin Panel</h1>
+                        <p>Manage interview questions, curators, and organization settings</p>
+                    </div>
+                </div>
+                <div class="admin-header-right">
+                    <button class="btn-action" onclick="exportData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn-action" onclick="document.getElementById('importFile').click();">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Import
+                    </button>
+                    <button class="btn-action danger" onclick="resetData();">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 2.2"/>
+                        </svg>
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab(event, 'mandatory')">Mandatory Questions</button>
+                <button class="tab-btn" onclick="switchTab(event, 'organizations')">Organizations</button>
+                <button class="tab-btn" onclick="switchTab(event, 'curators')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 0.4rem;">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    Curators
+                </button>
+            </div>
+
+            <!-- TAB 1: Mandatory Questions -->
+            <div id="mandatory" class="tab-content">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>Mandatory Questions <span class="section-title-count" id="mandatoryCount">0</span></h2>
+                        <p>These questions will appear at the beginning of every generated set.</p>
+                    </div>
+                    <div class="section-actions">
+                        <button class="btn-primary-action" onclick="toggleAddMandatory()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add Question
+                        </button>
+                        <button class="btn-primary-action" onclick="saveMandatoryQuestions()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+                            </svg>
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Question Form -->
+                <div id="addMandatoryForm" class="add-question-form hidden">
+                    <div class="form-group">
+                        <label>New Question</label>
+                        <textarea id="newMandatoryInput" placeholder="Enter question..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-action" onclick="toggleAddMandatory()">Cancel</button>
+                        <button class="btn-primary-action" onclick="addMandatoryQuestion()">Add</button>
+                    </div>
+                </div>
+
+                <!-- Questions Grid -->
+                <div id="mandatoryList" class="questions-grid"></div>
+            </div>
+
+            <!-- TAB 2: Organizations -->
+            <div id="organizations" class="tab-content hidden">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>Organizations</h2>
+                        <p>Manage question banks for each organization.</p>
+                    </div>
+                </div>
+                <div id="organizationsGrid" class="org-grid"></div>
+
+                <!-- Organization Questions Viewer -->
+                <div id="orgQuestionsContainer" style="display: none; margin-top: 3rem;">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <h2 id="orgQuestionTitle">Organization Questions</h2>
+                            <p id="orgQuestionDesc">Manage questions specific to this organization.</p>
+                        </div>
+                        <div class="section-actions">
+                            <button class="btn-primary-action" onclick="addOrgQuestion()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                Add Question
+                            </button>
+                            <button class="btn-primary-action" onclick="saveOrgQuestions()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+                                </svg>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add Question Form -->
+                    <div id="addOrgQuestionForm" class="add-question-form hidden">
+                        <div class="form-group">
+                            <label>New Question</label>
+                            <textarea id="newOrgQuestionInput" placeholder="Enter question..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-action" onclick="toggleAddOrgQuestion()">Cancel</button>
+                            <button class="btn-primary-action" onclick="addOrgQuestionConfirm()">Add</button>
+                        </div>
+                    </div>
+
+                    <!-- Questions Grid -->
+                    <div id="orgQuestionsList" class="questions-grid"></div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Curators -->
+            <div id="curators" class="tab-content hidden">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>Curator Management</h2>
+                        <p>Manage curators and the senior curator across all organizations.</p>
+                    </div>
+                </div>
+
+                <!-- Senior Curator -->
+                <div class="curator-section">
+                    <div class="curator-field">
+                        <label>Senior Curator</label>
+                        <div class="curator-field-group">
+                            <input type="text" id="seniorCuratorInput" placeholder="Senior Curator name">
+                            <button class="btn-primary-action" onclick="updateSeniorCurator()">Update</button>
+                        </div>
+                        <div id="seniorCuratorDisplay" style="margin-top: 0.8rem; font-size: 0.95rem; color: var(--muted);"></div>
+                    </div>
+                </div>
+
+                <!-- Organization Curators -->
+                <div class="curator-section">
+                    <div class="curator-field">
+                        <label>Select Organization</label>
+                        <select id="curatorOrgSelect" onchange="loadCuratorsForOrg()" style="width: 100%; padding: 0.8rem; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--input-text);">
+                            <option value="">Choose an organization...</option>
+                            <option value="FIB">Federal Investigation Bureau (FIB)</option>
+                            <option value="LSPD">Los Santos Police Department (LSPD)</option>
+                            <option value="SAHP">San Andreas Highway Patrol (SAHP)</option>
+                            <option value="GOV">Government (GOV)</option>
+                            <option value="LI">Lifeinvaider (LI)</option>
+                            <option value="NG">National Guard (NG)</option>
+                            <option value="EMS">Emergency Medical Services (EMS)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Curators List -->
+                <div id="curatorListContainer" style="display: none;">
+                    <div class="curator-section">
+                        <h3 id="curatorOrgName" style="margin-top: 0; margin-bottom: 1rem; color: var(--text);"></h3>
+                        <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem;">
+                            <input type="text" id="newCuratorInput" placeholder="Enter curator name..." style="flex: 1; padding: 0.8rem; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--input-text);">
+                            <button class="btn-primary-action" onclick="addNewCurator()">+ Add</button>
+                        </div>
+                        <div id="curatorsList" class="curators-list"></div>
+                        <div id="curatorCount" style="font-size: 0.9rem; color: var(--muted); margin-top: 0.8rem;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden File Input for Import -->
+    <input type="file" id="importFile" accept=".json" onchange="importData()">
+
+    <!-- Questions Editor Modal -->
+    <div id="questionEditorModal" class="modal hidden">
+        <div class="modal-backdrop" onclick="closeQuestionEditor()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editorTitle">Edit Questions</h2>
+                <button class="modal-close" onclick="closeQuestionEditor()">✕</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="questionsTextarea" placeholder="Enter questions (one per line)..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-action" onclick="closeQuestionEditor()">Cancel</button>
+                <button class="btn-primary-action" onclick="saveQuestionsEditor()">Save Questions</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="FIB.js"></script>
+    <script src="LSPD.js"></script>
+    <script src="SAHP.js"></script>
+    <script src="GOV.js"></script>
+    <script src="LI.js"></script>
+    <script src="NG.js"></script>
+    <script src="EMS.js"></script>
+    <script src="mandatory.js"></script>
+    <script src="curator-db.js"></script>
+
+    <script>
+        // Theme initialization
+        (function(){
+            const THEME_KEY = 'grand_theme';
+            const root = document.documentElement;
+            const toggleBtn = document.getElementById('themeToggleTop');
+            
+            function applyTheme(t){
+                root.setAttribute('data-theme', t);
+                if(toggleBtn) toggleBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+                try{ localStorage.setItem(THEME_KEY, t); }catch(e){}
+            }
+            
+            const saved = (function(){ try{ return localStorage.getItem(THEME_KEY); }catch(e){ return null; }})();
+            const initial = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(initial);
+            
+            window.toggleTheme = function(){ 
+                const cur = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; 
+                applyTheme(cur); 
+            };
+            
+            if(toggleBtn){ 
+                toggleBtn.addEventListener('click', ()=> window.toggleTheme()); 
+            }
+        })();
+
+        // Data
+        let allQuestions = {
+            mandatory: window.MANDATORY_QUESTIONS || [],
+            FIB: (window.BANKS && window.BANKS.FIB) || [],
+            LSPD: (window.BANKS && window.BANKS.LSPD) || [],
+            SAHP: (window.BANKS && window.BANKS.SAHP) || [],
+            GOV: (window.BANKS && window.BANKS.GOV) || [],
+            LI: (window.BANKS && window.BANKS.LI) || [],
+            NG: (window.BANKS && window.BANKS.NG) || [],
+            EMS: (window.BANKS && window.BANKS.EMS) || []
+        };
+
+        // Tab switching
+        function switchTab(event, tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.remove('hidden');
+            event.target.classList.add('active');
+
+            if (tabName === 'mandatory') renderMandatoryQuestions();
+            if (tabName === 'organizations') renderOrganizations();
+            if (tabName === 'curators') {
+                displaySeniorCurator();
+                renderCuratorOrganizations();
+            }
+        }
+
+        // Mandatory Questions
+        function renderMandatoryQuestions() {
+            const list = document.getElementById('mandatoryList');
+            const count = document.getElementById('mandatoryCount');
+            list.innerHTML = '';
+            count.textContent = allQuestions.mandatory.length;
+
+            if (allQuestions.mandatory.length === 0) {
+                list.innerHTML = '<p style="color: var(--muted); text-align: center; padding: 2rem;">No mandatory questions yet</p>';
+                return;
+            }
+
+            allQuestions.mandatory.forEach((q, idx) => {
+                const item = document.createElement('div');
+                item.className = 'question-item';
+                item.draggable = true;
+                item.dataset.index = idx;
+                
+                item.innerHTML = `
+                    <div class="drag-handle" title="Drag to reorder">⋮</div>
+                    <div>
+                        <span class="question-number">${idx + 1}.</span>
+                        <span class="question-text">${q}</span>
+                    </div>
+                    <button class="btn-icon" onclick="deleteMandatoryQuestion(${idx})" title="Delete">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                    </button>
+                `;
+
+                // Drag events
+                item.addEventListener('dragstart', () => item.classList.add('dragging'));
+                item.addEventListener('dragend', () => item.classList.remove('dragging'));
+                item.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    item.classList.add('drag-over');
+                });
+                item.addEventListener('dragleave', () => item.classList.remove('drag-over'));
+                item.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    item.classList.remove('drag-over');
+                    
+                    const dragging = document.querySelector('.dragging');
+                    if (dragging && dragging !== item) {
+                        const draggedIdx = parseInt(dragging.dataset.index);
+                        const targetIdx = parseInt(item.dataset.index);
+                        [allQuestions.mandatory[draggedIdx], allQuestions.mandatory[targetIdx]] = 
+                        [allQuestions.mandatory[targetIdx], allQuestions.mandatory[draggedIdx]];
+                        renderMandatoryQuestions();
+                    }
+                });
+
+                list.appendChild(item);
+            });
+        }
+
+        function toggleAddMandatory() {
+            document.getElementById('addMandatoryForm').classList.toggle('hidden');
+        }
+
+        function addMandatoryQuestion() {
+            const input = document.getElementById('newMandatoryInput');
+            if (!input.value.trim()) {
+                alert('Please enter a question');
+                return;
+            }
+            allQuestions.mandatory.push(input.value.trim());
+            input.value = '';
+            toggleAddMandatory();
+            renderMandatoryQuestions();
+        }
+
+        function deleteMandatoryQuestion(idx) {
+            if (!confirm('Delete this question?')) return;
+            allQuestions.mandatory.splice(idx, 1);
+            renderMandatoryQuestions();
+        }
+
+        function saveMandatoryQuestions() {
+            alert('Mandatory questions saved! (Updates sync to index.html)');
+        }
+
+        // Organizations
+        function renderOrganizations() {
+            const grid = document.getElementById('organizationsGrid');
+            grid.innerHTML = '';
+            
+            const orgs = [
+                { code: 'FIB', name: 'Federal Investigation Bureau' },
+                { code: 'LSPD', name: 'Los Santos Police Department' },
+                { code: 'SAHP', name: 'San Andreas Highway Patrol' },
+                { code: 'GOV', name: 'Government' },
+                { code: 'LI', name: 'Lifeinvaider' },
+                { code: 'NG', name: 'National Guard' },
+                { code: 'EMS', name: 'Emergency Medical Service' }
+            ];
+
+            orgs.forEach(org => {
+                const count = allQuestions[org.code]?.length || 0;
+                const card = document.createElement('div');
+                card.className = 'org-card';
+                card.innerHTML = `
+                    <div class="org-code">${org.code}</div>
+                    <div class="org-name">${org.name}</div>
+                    <div class="org-count">${count} Questions</div>
+                    <button class="btn-primary-action" style="width: 100%;" onclick="editOrganization('${org.code}')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                        Edit
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function editOrganization(orgCode) {
+            const orgData = [
+                { code: 'FIB', name: 'Federal Investigation Bureau' },
+                { code: 'LSPD', name: 'Los Santos Police Department' },
+                { code: 'SAHP', name: 'San Andreas Highway Patrol' },
+                { code: 'GOV', name: 'Government' },
+                { code: 'LI', name: 'Lifeinvaider' },
+                { code: 'NG', name: 'National Guard' },
+                { code: 'EMS', name: 'Emergency Medical Service' }
+            ];
+            
+            const org = orgData.find(o => o.code === orgCode);
+            const questions = allQuestions[orgCode] || [];
+            
+            // Store current org code
+            window.currentOrgCode = orgCode;
+            
+            // Update title and description
+            document.getElementById('orgQuestionTitle').textContent = `${org.name} Questions`;
+            document.getElementById('orgQuestionDesc').textContent = 'Manage questions specific to this organization.';
+            
+            // Show the container
+            document.getElementById('orgQuestionsContainer').style.display = 'block';
+            
+            // Render questions
+            renderOrgQuestions();
+            
+            // Scroll to questions section
+            setTimeout(() => {
+                document.getElementById('orgQuestionsContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function renderOrgQuestions() {
+            const orgCode = window.currentOrgCode;
+            const questions = allQuestions[orgCode] || [];
+            const container = document.getElementById('orgQuestionsList');
+            
+            if (questions.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--muted); font-size: 0.95rem; animation: fadeIn 0.4s ease;">No questions yet. Click "Add Question" to get started.</div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const item = document.createElement('div');
+                item.className = 'question-item';
+                item.innerHTML = `
+                    <div class="question-number">${idx + 1}.</div>
+                    <div class="question-text">${q}</div>
+                    <button class="btn-icon" onclick="deleteOrgQuestion(${idx})">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function toggleAddOrgQuestion() {
+            document.getElementById('addOrgQuestionForm').classList.toggle('hidden');
+            if (!document.getElementById('addOrgQuestionForm').classList.contains('hidden')) {
+                document.getElementById('newOrgQuestionInput').focus();
+            }
+        }
+
+        function addOrgQuestion() {
+            toggleAddOrgQuestion();
+        }
+
+        function addOrgQuestionConfirm() {
+            const input = document.getElementById('newOrgQuestionInput');
+            const question = input.value.trim();
+            
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+            
+            const orgCode = window.currentOrgCode;
+            allQuestions[orgCode] = allQuestions[orgCode] || [];
+            allQuestions[orgCode].push(question);
+            
+            input.value = '';
+            toggleAddOrgQuestion();
+            renderOrgQuestions();
+            renderOrganizations();
+        }
+
+        function deleteOrgQuestion(index) {
+            const orgCode = window.currentOrgCode;
+            if (confirm('Delete this question?')) {
+                const items = document.getElementById('orgQuestionsList').querySelectorAll('.question-item');
+                if (items[index]) {
+                    items[index].style.animation = 'slideOutLeft 0.3s ease forwards';
+                    setTimeout(() => {
+                        allQuestions[orgCode].splice(index, 1);
+                        renderOrgQuestions();
+                        renderOrganizations();
+                    }, 300);
+                } else {
+                    allQuestions[orgCode].splice(index, 1);
+                    renderOrgQuestions();
+                    renderOrganizations();
+                }
+            }
+        }
+
+        function saveOrgQuestions() {
+            const orgCode = window.currentOrgCode;
+            const count = allQuestions[orgCode]?.length || 0;
+            alert(`Saved! ${count} questions for this organization.`);
+        }
+
+        function closeQuestionEditor() {
+            document.getElementById('questionEditorModal').classList.add('hidden');
+        }
+
+        function saveQuestionsEditor() {
+            const textarea = document.getElementById('questionsTextarea');
+            const orgCode = textarea.dataset.orgCode;
+            const text = textarea.value.trim();
+            
+            if (!text) {
+                alert('Please enter at least one question');
+                return;
+            }
+            
+            const questions = text.split('\n').map(q => q.trim()).filter(q => q.length > 0);
+            
+            allQuestions[orgCode] = questions;
+            window[orgCode].questions = questions;
+            
+            closeQuestionEditor();
+            renderOrganizations();
+            alert(`Saved ${questions.length} questions for ${orgCode}!`);
+        }
+
+        // Curators
+        function renderCuratorOrganizations() {
+            // Curators can be managed through the select dropdown
+        }
+
+        function loadCuratorsForOrg() {
+            const org = document.getElementById('curatorOrgSelect').value;
+            const container = document.getElementById('curatorListContainer');
+            
+            if (!org) {
+                container.style.display = 'none';
+                return;
+            }
+
+            // Reset animation
+            container.style.animation = 'none';
+            setTimeout(() => {
+                container.style.display = 'block';
+                document.getElementById('newCuratorInput').value = '';
+                // Trigger reflow to restart animation
+                void container.offsetWidth;
+                container.style.animation = '';
+                renderCuratorsList(org);
+            }, 10);
+        }
+
+        function renderCuratorsList(org) {
+            const curators = window.CuratorDB.getCurators(org);
+            const list = document.getElementById('curatorsList');
+            const count = document.getElementById('curatorCount');
+            
+            const orgNames = {
+                FIB: 'Federal Investigation Bureau (FIB)',
+                LSPD: 'Los Santos Police Department (LSPD)',
+                SAHP: 'San Andreas Highway Patrol (SAHP)',
+                GOV: 'Government (GOV)',
+                LI: 'Lifeinvaider (LI)',
+                NG: 'National Guard (NG)',
+                EMS: 'Emergency Medical Services (EMS)'
+            };
+
+            document.getElementById('curatorOrgName').textContent = `Curators for ${orgNames[org] || org}`;
+            list.innerHTML = '';
+            count.textContent = `Total: ${curators.length} curator(s)`;
+
+            if (curators.length === 0) {
+                list.innerHTML = '<p style="color: var(--muted); font-style: italic; text-align: center; padding: 1rem;">No curators assigned yet</p>';
+                return;
+            }
+
+            curators.forEach(curator => {
+                const item = document.createElement('div');
+                item.className = 'curator-list-item';
+                item.innerHTML = `
+                    <span class="curator-name">${curator}</span>
+                    <button class="btn-icon" onclick="removeCurator('${org}', '${curator.replace(/'/g, "\\'")}')" title="Remove">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function addNewCurator() {
+            const org = document.getElementById('curatorOrgSelect').value;
+            const input = document.getElementById('newCuratorInput');
+            const name = input.value.trim();
+
+            if (!name) {
+                alert('Please enter a curator name');
+                return;
+            }
+
+            if (window.CuratorDB.addCurator(org, name)) {
+                input.value = '';
+                renderCuratorsList(org);
+            } else {
+                alert('Failed to add curator or curator already exists');
+            }
+        }
+
+        function removeCurator(org, name) {
+            if (!confirm('Remove this curator?')) return;
+            if (window.CuratorDB.removeCurator(org, name)) {
+                renderCuratorsList(org);
+            } else {
+                alert('Failed to remove curator');
+            }
+        }
+
+        function updateSeniorCurator() {
+            const input = document.getElementById('seniorCuratorInput');
+            const name = input.value.trim();
+
+            if (!name) {
+                alert('Please enter a name');
+                return;
+            }
+
+            if (window.CuratorDB.setSeniorCurator(name)) {
+                input.value = '';
+                displaySeniorCurator();
+            } else {
+                alert('Failed to update senior curator');
+            }
+        }
+
+        function displaySeniorCurator() {
+            const senior = window.CuratorDB.getSeniorCurator();
+            document.getElementById('seniorCuratorDisplay').textContent = `Current: ${senior}`;
+        }
+
+        // Export/Import
+        function exportData() {
+            const data = {
+                mandatory: allQuestions.mandatory,
+                curators: window.CuratorDB.getAllCurators()
+            };
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `admin-data-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            const file = document.getElementById('importFile').files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.mandatory) allQuestions.mandatory = data.mandatory;
+                    if (data.curators) window.CuratorDB.importFromJSON(JSON.stringify(data.curators));
+                    renderMandatoryQuestions();
+                    alert('Data imported successfully');
+                } catch (err) {
+                    alert('Error importing file: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            document.getElementById('importFile').value = '';
+        }
+
+        function resetData() {
+            if (!confirm('Are you sure you want to reset all data to defaults?')) return;
+            allQuestions.mandatory = window.MANDATORY_QUESTIONS ? [...window.MANDATORY_QUESTIONS] : [];
+            window.CuratorDB.resetToDefaults();
+            renderMandatoryQuestions();
+            displaySeniorCurator();
+            alert('Data reset to defaults');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMandatoryQuestions();
+            displaySeniorCurator();
+        });
+
+        // Listen for curator changes from other tabs
+        window.addEventListener('curatorDbChanged', () => {
+            const org = document.getElementById('curatorOrgSelect').value;
+            if (org) renderCuratorsList(org);
+        });
+    </script>
+</body>
+</html>

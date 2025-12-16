@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand interview</title>
+    <link rel="stylesheet" href="style.css">
+  <!-- Load question bank scripts (one per org) -->
+  <script src="FIB.js"></script>
+  <script src="LSPD.js"></script>
+  <script src="SAHP.js"></script>
+  <script src="GOV.js"></script>
+  <script src="LI.js"></script>
+  <script src="NG.js"></script>
+  <script src="EMS.js"></script>
+  <!-- Mandatory questions -->
+  <script src="mandatory.js"></script>
+  <!-- Curator database system -->
+  <script src="curator-db.js"></script>
+  <!-- Curator mapping (generated from curator.txt) -->
+  <script src="curator.js"></script>
+  <!-- PDF library for export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="top-nav">
+    <div class="top-nav-inner">
+      <div class="brand">
+        <div class="brand-badge">LOGO</div>
+        <div class="brand-text"><div class="brand-title">Grand Interview</div><div class="brand-sub">Question Management</div></div>
+      </div>
+      <nav class="top-links">
+        <button class="nav-pill active" aria-current="page" style="transition: all 0.3s ease;">
+          <span class="nav-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 18 0A9 9 0 0 0 3 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="nav-text">Home</span>
+        </button>
+        <button class="nav-pill" onclick="window.location.href='admin.html'" style="transition: all 0.3s ease;">
+          <span class="nav-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="2"/><line x1="12" y1="2" x2="12" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="18" x2="12" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="12" x2="6" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="19.78" y1="4.22" x2="16.93" y2="7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="7.07" y1="16.93" x2="4.22" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <span class="nav-text">Admin</span>
+        </button>
+      </nav>
+      <div class="top-actions">
+        <button id="themeToggleTop" class="icon-btn" title="Toggle theme">
+          <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <section class="hero">
+      <h1>Interview Question</h1>
+    </section>
+
+    <div class="controls-row">
+      <div class="controls-left">
+        <label class="label">Select Organization</label>
+        <select id="orgSelect">
+          <option value="">Choose an organization...</option>
+          <option value="FIB">Federal Investigation Bureau (FIB)</option>
+          <option value="LSPD">Los Santos Police Department (LSPD)</option>
+          <option value="SAHP">San Andreas Highway Patrol (SAHP)</option>
+          <option value="GOV">Government (GOV)</option>
+          <option value="LI">Lifeinvaider (LI)</option>
+          <option value="NG">National Guard (NG)</option>
+          <option value="EMS">Emergency Medical Service (EMS)</option>
+        </select>
+        <!-- Custom-styled replacement for the native select (kept in sync) -->
+        <div id="customOrgSelect" class="custom-select" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
+          <div class="custom-select-value">Choose an organization...</div>
+          <div class="custom-select-list" role="listbox" aria-label="Select Organization" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quality-row">
+      <label class="label">Question Count</label>
+      <fieldset class="quality-options" role="radiogroup" aria-label="Number of questions">
+        <input type="radio" id="q30" name="quality" value="30" checked>
+        <label for="q30"><div class="pill-number">30</div><div class="pill-desc">Quick interview</div></label>
+
+        <input type="radio" id="q50" name="quality" value="50">
+        <label for="q50"><div class="pill-number">50</div><div class="pill-desc">Standard</div></label>
+
+        <input type="radio" id="q70" name="quality" value="70">
+        <label for="q70"><div class="pill-number">70</div><div class="pill-desc">Comprehensive</div></label>
+      </fieldset>
+    </div>
+
+<!-- Organization Manager Modal -->
+<div id="orgManagerModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+  <div style="background: var(--card-bg); padding: 2rem; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 1rem;">
+      <h2 style="margin: 0; color: var(--text);">Add New Organization</h2>
+      <button onclick="closeOrgManager()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text);">×</button>
+    </div>
+    
+    <div style="margin-bottom: 1.5rem;">
+      <label for="newOrgName" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">Organization Name (short code, e.g., "FIRE")</label>
+      <input type="text" id="newOrgName" placeholder="e.g., FIRE, PD, HOSPITAL" style="width: 100%; padding: 0.6rem; border: 1px solid var(--input-border); border-radius: 6px; box-sizing: border-box; background: var(--input-bg); color: var(--input-text);">
+    </div>
+    
+    <div style="margin-bottom: 1.5rem;">
+      <label for="newOrgFullName" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">Full Organization Name</label>
+      <input type="text" id="newOrgFullName" placeholder="e.g., Fire Department" style="width: 100%; padding: 0.6rem; border: 1px solid var(--input-border); border-radius: 6px; box-sizing: border-box; background: var(--input-bg); color: var(--input-text);">
+    </div>
+    
+    <div style="margin-bottom: 1.5rem;">
+      <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">Questions (one per line)</label>
+      <textarea id="newOrgQuestions" placeholder="Enter questions, one per line..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--input-border); border-radius: 6px; box-sizing: border-box; background: var(--input-bg); color: var(--input-text); font-family: monospace; min-height: 150px; resize: vertical;"></textarea>
+    </div>
+    
+    <div style="display: flex; gap: 0.8rem; justify-content: flex-end;">
+      <button onclick="closeOrgManager()" style="padding: 0.6rem 1.2rem; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#5a6268'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#6c757d'; this.style.transform='translateY(0)'">Cancel</button>
+      <button onclick="saveNewOrganization()" style="padding: 0.6rem 1.2rem; background: #22c55e; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#16a34a'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#22c55e'; this.style.transform='translateY(0)'">Create Organization</button>
+    </div>
+  </div>
+</div>
+
+  <section class="applicant-container">
+    <h3>Applicant Information</h3>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+      <div style="flex: 1; min-width: 250px;">
+        <label for="applicantName" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: var(--text);">Applicant Name</label>
+        <input type="text" id="applicantName" placeholder="Enter applicant name" style="width: 100%; padding: 0.6rem; border: 1px solid rgba(7,32,58,.12); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+      </div>
+      <div style="flex: 1; min-width: 250px;">
+        <label for="applicationUrl" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: var(--text);">Application URL</label>
+        <input type="url" id="applicationUrl" placeholder="https://example.com/application" style="width: 100%; padding: 0.6rem; border: 1px solid rgba(7,32,58,.12); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+      </div>
+    </div>
+  </section>
+
+  <section class="curator-container" id="curatorContainer" style="display: none;">
+    <h3>Curator Information</h3>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+      <div style="flex: 1; min-width: 250px;">
+        <label for="curatorName" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: var(--text);">Curator</label>
+        <input type="text" id="curatorName" placeholder="Enter curator name" style="width: 100%; padding: 0.6rem; border: 1px solid rgba(7,32,58,.12); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+        <div id="curatorList" style="margin-top:0.5rem; font-size:0.85rem; color:var(--text); display:none;"></div>
+      </div>
+      <div style="flex: 1; min-width: 250px;">
+        <label for="seniorCuratorName" style="display: block; font-weight: 600; margin-bottom: 0.4rem; color: var(--text);">Senior Curator</label>
+        <input type="text" id="seniorCuratorName" placeholder="Enter senior curator name" style="width: 100%; padding: 0.6rem; border: 1px solid rgba(7,32,58,.12); border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+      </div>
+    </div>
+  </section>
+
+  <div class="action-row">
+    <div class="action-left"></div>
+    <div class="action-center">
+      <button class="generate-btn" id="generateBtn" type="button" aria-live="polite">
+        <span class="btn-spinner" aria-hidden="true"></span>
+        <span class="btn-text">Generate Questions</span>
+      </button>
+    </div>
+    <div class="action-right"></div>
+  </div>
+
+  <div class="print-actions">
+    <button id="copyBtn" type="button" class="action-btn copy-btn" style="display:none;" title="Copy questions to clipboard">
+      <span class="btn-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V9M21 3H15M15 3V9H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="btn-text">Copy</span>
+    </button>
+    <button id="exportPdfBtn" type="button" class="action-btn export-btn" style="display:none;" title="Export questions as PDF">
+      <span class="btn-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V12M12 12L7 7M12 12L17 7M19 13V20C19 21.1 18.1 22 17 22H7C5.9 22 5 21.1 5 20V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="btn-text">Export PDF</span>
+    </button>
+  </div>
+
+  <section class="results-container" aria-live="polite">
+    <div id="emptyState" class="empty-state">
+      <div class="empty-icon">?</div>
+      <h3>No Questions Generated</h3>
+      <p>Select an organization and click "Generate Questions" to create your interview question set.</p>
+    </div>
+
+    <h3 class="results-heading">Questions</h3>
+    <ol id="generated-list" class="generated-list" aria-label="Generated questions list"></ol>
+  </section>
+</div>
+
+<script>
+  /*
+    How to provide your questions list:
+    - Define a global variable named `ALL_QUESTIONS` (array of strings) above this script in the page,
+      or edit the `allQuestionsPlaceholder` below and replace the sample entries with your real questions.
+  */
+
+  // Organization Manager Functions
+  function showOrgManager(){
+    const modal = document.getElementById('orgManagerModal');
+    if(modal) modal.style.display = 'flex';
+  }
+
+  function closeOrgManager(){
+    const modal = document.getElementById('orgManagerModal');
+    if(modal){
+      modal.style.display = 'none';
+      document.getElementById('newOrgName').value = '';
+      document.getElementById('newOrgFullName').value = '';
+      document.getElementById('newOrgQuestions').value = '';
+    }
+  }
+
+  function saveNewOrganization(){
+    const code = (document.getElementById('newOrgName').value || '').trim().toUpperCase();
+    const fullName = (document.getElementById('newOrgFullName').value || '').trim();
+    const questionsText = (document.getElementById('newOrgQuestions').value || '').trim();
+    
+    if(!code){
+      alert('Please enter an organization code (e.g., FIRE)');
+      return;
+    }
+    if(!fullName){
+      alert('Please enter the full organization name');
+      return;
+    }
+    if(!questionsText){
+      alert('Please enter at least one question');
+      return;
+    }
+    
+    const questions = questionsText.split('\n').map(q => q.trim()).filter(q => q.length > 0);
+    if(questions.length === 0){
+      alert('Please enter at least one question');
+      return;
+    }
+
+    // Create or update the organization bank in localStorage
+    try{
+      const key = `org_bank_${code}_v1`;
+      localStorage.setItem(key, JSON.stringify(questions));
+      
+      // Also update window.BANKS if it exists
+      if(!window.BANKS) window.BANKS = {};
+      window.BANKS[code] = questions;
+      
+      // Add option to the select if not already there
+      const select = document.getElementById('orgSelect');
+      let exists = false;
+      for(let opt of select.options){
+        if(opt.value === code){
+          exists = true;
+          break;
+        }
+      }
+      if(!exists){
+        const newOption = document.createElement('option');
+        newOption.value = code;
+        newOption.textContent = `${fullName} (${code})`;
+        select.appendChild(newOption);
+      }
+      
+      // Save metadata about this organization
+      const metaKey = `org_meta_${code}_v1`;
+      localStorage.setItem(metaKey, JSON.stringify({name: fullName, code: code}));
+      
+      alert(`Organization "${fullName}" created successfully with ${questions.length} questions!`);
+      closeOrgManager();
+    }catch(e){
+      alert('Error saving organization: ' + e.message);
+    }
+  }
+
+  // Load custom organizations from localStorage on page load
+  function loadCustomOrganizations(){
+    const select = document.getElementById('orgSelect');
+    try{
+      // Scan localStorage for org_meta keys
+      for(let i = 0; i < localStorage.length; i++){
+        const key = localStorage.key(i);
+        if(key && key.startsWith('org_meta_') && key.endsWith('_v1')){
+          const meta = JSON.parse(localStorage.getItem(key));
+          const code = meta.code;
+          // Check if already in select
+          let exists = false;
+          for(let opt of select.options){
+            if(opt.value === code) { exists = true; break; }
+          }
+          if(!exists){
+            const newOption = document.createElement('option');
+            newOption.value = code;
+            newOption.textContent = `${meta.name} (${code})`;
+            select.appendChild(newOption);
+            // Also load into window.BANKS
+            if(!window.BANKS) window.BANKS = {};
+            const bankKey = `org_bank_${code}_v1`;
+            try{
+              window.BANKS[code] = JSON.parse(localStorage.getItem(bankKey));
+            }catch(e){}
+          }
+        }
+      }
+    }catch(e){ /* silently ignore */ }
+  }
+
+  // Call on page load to restore custom orgs
+  window.addEventListener('load', loadCustomOrganizations);
+
+  // Close modal when clicking outside
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const modal = document.getElementById('orgManagerModal');
+    if(modal){
+      modal.addEventListener('click', (e)=>{
+        if(e.target === modal) closeOrgManager();
+      });
+    }
+  });
+
+  // If you want to supply your own list, add a script before this one:
+  // <script>const ALL_QUESTIONS = ['Q1','Q2', ...];
+
+  const allQuestionsPlaceholder = Array.from({length:120}, (_,i)=>`Question ${i+1}`);
+  let ALL_QUESTIONS = window.ALL_QUESTIONS || allQuestionsPlaceholder;
+
+  // If a question bank script defines `window.BANKS`, use the selected org's bank automatically
+  (function(){
+    const orgSelectEl = document.getElementById('orgSelect');
+    const curatorContainer = document.getElementById('curatorContainer');
+    function applyOrgBank(){
+      if(!orgSelectEl) return;
+      const org = orgSelectEl.value;
+      if(org && window.BANKS && window.BANKS[org]){
+        // update both the global bank and the local ALL_QUESTIONS variable
+        window.ALL_QUESTIONS = window.BANKS[org].slice();
+        ALL_QUESTIONS = window.ALL_QUESTIONS;
+        const count = ALL_QUESTIONS.length;
+        // Show curator container when organization is selected
+        if(curatorContainer) curatorContainer.style.display = 'block';
+
+        // Auto-select curator if mapping exists and make field uneditable
+        try{
+          const curatorInput = document.getElementById('curatorName');
+          const seniorInput = document.getElementById('seniorCuratorName');
+          // First try to get curators from the new CuratorDB system
+          let allCurators = [];
+          if(window.CuratorDB && typeof window.CuratorDB.getCurators === 'function'){
+            allCurators = window.CuratorDB.getCurators(org);
+          }
+          // Fallback to legacy CURATORS mapping
+          if(allCurators.length === 0 && window.CURATORS && window.CURATORS[org] && window.CURATORS[org].length > 0){
+            allCurators = window.CURATORS[org];
+          }
+          
+          if(allCurators && allCurators.length > 0){
+            // Put all curator names into the input box (comma-separated) and lock the field
+            if(curatorInput){ curatorInput.value = allCurators.join(', '); curatorInput.readOnly = true; curatorInput.disabled = true; }
+            // hide the separate list element to avoid duplication
+            try{
+              const listEl = document.getElementById('curatorList');
+              if(listEl){ listEl.textContent = ''; listEl.style.display = 'none'; }
+            }catch(e){}
+          } else {
+            if(curatorInput){ curatorInput.value = ''; curatorInput.readOnly = false; curatorInput.disabled = false; }
+            try{ const listEl = document.getElementById('curatorList'); if(listEl){ listEl.textContent = ''; listEl.style.display = 'none'; } }catch(e){}
+          }
+
+          // Set senior curator
+          let seniorCurator = '';
+          if(window.CuratorDB && typeof window.CuratorDB.getSeniorCurator === 'function'){
+            seniorCurator = window.CuratorDB.getSeniorCurator();
+          } else if(window.SENIOR_CURATOR){
+            seniorCurator = window.SENIOR_CURATOR;
+          }
+          if(seniorCurator && seniorInput){
+            seniorInput.value = seniorCurator;
+            seniorInput.readOnly = true;
+            seniorInput.disabled = true;
+          } else {
+            if(seniorInput){ seniorInput.value = ''; seniorInput.readOnly = false; seniorInput.disabled = false; }
+          }
+        }catch(e){ /* ignore if inputs not present */ }
+      } else {
+        // Hide curator container if no organization selected
+        if(curatorContainer) curatorContainer.style.display = 'none';
+        // make curator inputs editable/cleared
+        try{
+          const curatorInput = document.getElementById('curatorName');
+          const seniorInput = document.getElementById('seniorCuratorName');
+          const listEl = document.getElementById('curatorList');
+          if(curatorInput){ curatorInput.value = ''; curatorInput.readOnly = false; curatorInput.disabled = false; }
+          if(seniorInput){ seniorInput.value = ''; seniorInput.readOnly = false; seniorInput.disabled = false; }
+          if(listEl){ listEl.textContent = ''; listEl.style.display = 'none'; }
+        }catch(e){}
+      }
+    }
+    if(orgSelectEl){ orgSelectEl.addEventListener('change', applyOrgBank); applyOrgBank(); }
+  })();
+
+    // Custom select replacement: accessible keyboard navigation, arrow keys, rebuilds when options change
+    (function(){
+      const native = document.getElementById('orgSelect');
+      const custom = document.getElementById('customOrgSelect');
+      const list = custom && custom.querySelector('.custom-select-list');
+      const value = custom && custom.querySelector('.custom-select-value');
+
+      const colorMap = {
+        'EMS':'EMS','FIB':'FIB','GOV':'GOV','LI':'LI','LSPD':'LSPD','NG':'NG','SAHP':'SAHP'
+      };
+
+      function build(){
+        if(!native || !custom || !list || !value) return;
+        list.innerHTML = '';
+        for(let i=0;i<native.options.length;i++){
+          const opt = native.options[i];
+          if(!opt.value) continue;
+          const item = document.createElement('div');
+          item.className = 'custom-select-item';
+          item.tabIndex = 0;
+          item.role = 'option';
+          item.dataset.value = opt.value;
+          const dot = document.createElement('span'); dot.className = 'dot color-' + (colorMap[opt.value] || 'FIB');
+          const label = document.createElement('div'); label.className = 'item-label'; label.innerHTML = opt.text;
+          const check = document.createElement('div'); check.className = 'check'; check.innerHTML = '';
+          item.appendChild(dot); item.appendChild(label); item.appendChild(check);
+
+          // Click / keyboard selection
+          item.addEventListener('click', ()=> selectValue(opt.value));
+          item.addEventListener('keydown', (e)=>{
+            if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); selectValue(opt.value); }
+            else if(e.key === 'ArrowDown'){ e.preventDefault(); const next = item.nextElementSibling; if(next) next.focus(); }
+            else if(e.key === 'ArrowUp'){ e.preventDefault(); const prev = item.previousElementSibling; if(prev) prev.focus(); else custom.focus(); }
+            else if(e.key === 'Escape'){ closeList(); custom.focus(); }
+          });
+
+          list.appendChild(item);
+        }
+
+        // Limit height and allow scrolling
+        list.style.maxHeight = '260px';
+        list.style.overflowY = 'auto';
+        // start closed
+        list.classList.remove('open'); list.hidden = true;
+
+        refreshValue();
+      }
+
+      function refreshValue(){
+        const sel = native.options[native.selectedIndex];
+        value.innerHTML = '';
+        if(!sel || !sel.value){
+          const placeholder = document.createElement('div'); placeholder.className = 'label-text'; placeholder.textContent = 'Choose an organization...';
+          const caret = document.createElement('div'); caret.className = 'caret'; caret.textContent = '▾';
+          value.appendChild(placeholder); value.appendChild(caret);
+          list.querySelectorAll('.custom-select-item').forEach(it=>{ it.classList.remove('selected'); it.setAttribute('aria-selected','false'); });
+          return;
+        }
+        const dot = document.createElement('span'); dot.className = 'dot color-' + (colorMap[sel.value] || 'FIB');
+        const t = document.createElement('div'); t.className = 'label-text'; t.textContent = sel.text;
+        const caret = document.createElement('div'); caret.className = 'caret'; caret.textContent = '▾';
+        value.appendChild(dot); value.appendChild(t); value.appendChild(caret);
+
+        // mark selection in list
+        list.querySelectorAll('.custom-select-item').forEach(it=>{
+          const selected = it.dataset.value === sel.value;
+          it.classList.toggle('selected', selected);
+          it.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+      }
+
+      function openList(){ 
+        if(!custom || !list) return; 
+        list.hidden = false; 
+        setTimeout(()=> list.classList.add('open'), 20);
+        custom.setAttribute('aria-expanded','true'); 
+        const sel = list.querySelector('.custom-select-item.selected') || list.querySelector('.custom-select-item'); if(sel) sel.focus(); 
+      }
+      function closeList(){ 
+        if(!custom || !list) return; 
+        list.classList.remove('open'); 
+        custom.setAttribute('aria-expanded','false'); 
+        setTimeout(()=> { try{ list.hidden = true; }catch(e){} }, 220);
+      }
+
+      function toggleList(){ if(!custom||!list) return; if(list.hidden) openList(); else closeList(); }
+
+      function selectValue(val){ if(!native) return; native.value = val; native.dispatchEvent(new Event('change')); refreshValue(); closeList(); custom.focus(); }
+
+      if(custom){
+        custom.addEventListener('click', (e)=>{ e.stopPropagation(); toggleList(); });
+        document.addEventListener('click', ()=> closeList());
+        custom.addEventListener('keydown', (e)=>{
+          if(e.key === 'ArrowDown'){ e.preventDefault(); openList(); }
+          else if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleList(); }
+          else if(e.key === 'Escape'){ closeList(); }
+        });
+      }
+
+      // Keep in sync if native select changes elsewhere
+      if(native){ native.addEventListener('change', refreshValue); }
+
+      // Rebuild when custom orgs are loaded or options change
+      window.addEventListener('load', build);
+      const obs = new MutationObserver(build); obs.observe(document.getElementById('orgSelect'), {childList:true});
+    })();
+
+  // Auto-adjust page scale to fit viewport height when content grows
+  (function(){
+    const root = document.documentElement;
+    function adjustScale(){
+      window.requestAnimationFrame(()=>{
+        try{
+          const margin = 56; // leave a little breathing room for UI chrome
+          const contentHeight = document.documentElement.scrollHeight;
+          const avail = window.innerHeight - margin;
+          let scale = 1;
+          if(contentHeight > avail && contentHeight > 0){
+            scale = Math.max(0.72, Math.min(1, avail / contentHeight));
+          }
+          root.style.setProperty('--page-scale', scale.toFixed(3));
+        }catch(e){ /* ignore measurement errors */ }
+      });
+    }
+
+    // Recompute on load and resize
+    window.addEventListener('load', adjustScale);
+    window.addEventListener('resize', adjustScale);
+
+    // Observe mutations (content changes) to recompute automatically
+    const mo = new MutationObserver(adjustScale);
+    mo.observe(document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+
+    // Also nudge after generation (content expands)
+    const gen = document.getElementById('generateBtn');
+    if(gen) gen.addEventListener('click', ()=> setTimeout(adjustScale, 600));
+    // expose adjust for other code to call when needed
+    try{ window.adjustPageScale = adjustScale; }catch(e){}
+  })();
+
+  // Theme initialization: reads stored preference or system preference, applies theme, and wires toggle button
+  (function(){
+    const THEME_KEY = 'grand_theme';
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+    function applyTheme(t){
+      root.setAttribute('data-theme', t);
+      if(toggleBtn){
+        toggleBtn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+      }
+      const topToggle = document.getElementById('themeToggleTop');
+      if(topToggle){
+        const sunIcon = topToggle.querySelector('.sun-icon');
+        const moonIcon = topToggle.querySelector('.moon-icon');
+        console.log('Icon elements found - sun:', !!sunIcon, 'moon:', !!moonIcon);
+        if(sunIcon && moonIcon){
+          sunIcon.style.display = t === 'dark' ? 'block' : 'none';
+          moonIcon.style.display = t === 'dark' ? 'none' : 'block';
+          console.log('Theme applied:', t, '| Sun display:', sunIcon.style.display, '| Moon display:', moonIcon.style.display);
+        }
+        topToggle.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+      }
+      try{ localStorage.setItem(THEME_KEY, t); }catch(e){}
+    }
+    const saved = (function(){ try{ return localStorage.getItem(THEME_KEY); }catch(e){ return null; }})();
+    const initial = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(initial);
+    window.toggleTheme = function(){ const cur = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; applyTheme(cur); };
+    if(toggleBtn){ toggleBtn.addEventListener('click', ()=> window.toggleTheme()); }
+    const topToggle = document.getElementById('themeToggleTop');
+    if(topToggle){ 
+      topToggle.addEventListener('click', ()=> window.toggleTheme()); 
+      console.log('Theme toggle button wired. Current theme:', root.getAttribute('data-theme')); 
+    }
+  })();
+  
+
+  const STORAGE_KEY_BASE = 'grand_used_questions_v1';
+
+  function getSelectedOrg(){
+    const sel = document.getElementById('orgSelect');
+    return (sel && sel.value) ? sel.value : 'GLOBAL';
+  }
+
+  function getStorageKey(){
+    return STORAGE_KEY_BASE + '::' + getSelectedOrg();
+  }
+
+  function readUsedSet(){
+    try{
+      const raw = localStorage.getItem(getStorageKey());
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    }catch(e){ return new Set(); }
+  }
+
+  function persistUsedSet(set){
+    try{ localStorage.setItem(getStorageKey(), JSON.stringify(Array.from(set))); }catch(e){}
+  }
+
+  function getSelectedQuantity(){
+    const checked = document.querySelector('input[name="quality"]:checked');
+    return checked ? Number(checked.value) : 30;
+  }
+
+  function shuffleArray(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  function generateQuestions(){
+    const qty = getSelectedQuantity();
+    const org = getSelectedOrg();
+
+    // Check if organization is selected
+    if(org === 'GLOBAL' || org === ''){
+      alert('No organization selected. Please select an organization to generate Questions.');
+      return [];
+    }
+
+    if(ALL_QUESTIONS.length === 0){
+      alert('No questions available for the selected organization.');
+      return [];
+    }
+
+    // Create a pool of all questions with indices
+    const pool = ALL_QUESTIONS.map((q, i) => ({q, i}));
+    
+    // Shuffle the entire pool randomly
+    shuffleArray(pool);
+    
+    // Take the requested quantity (but ensure no more than available to avoid duplicates)
+    const take = Math.min(qty, pool.length);
+    const chosen = pool.slice(0, take);
+
+    // Combine mandatory questions with generated questions
+    const mandatoryQuestions = window.MANDATORY_QUESTIONS || [];
+    const allQuestions = [...mandatoryQuestions, ...chosen.map(c => c.q)];
+    
+    return allQuestions;
+  }
+
+  function renderList(items){
+    const ol = document.getElementById('generated-list');
+    const empty = document.getElementById('emptyState');
+    ol.innerHTML = '';
+    if(!items || items.length === 0){
+      if(empty) empty.style.display = 'block';
+      if(ol) ol.style.display = 'none';
+      const copyBtn = document.getElementById('copyBtn');
+      const exportPdfBtn = document.getElementById('exportPdfBtn');
+      if(copyBtn) copyBtn.style.display = 'none';
+      if(exportPdfBtn) exportPdfBtn.style.display = 'none';
+      return;
+    } else {
+      if(empty) empty.style.display = 'none';
+      if(ol) ol.style.display = 'block';
+    }
+    items.forEach((it, idx) => {
+      const li = document.createElement('li');
+      li.style.marginBottom = '1.2rem';
+      
+      // Question text
+      const questionDiv = document.createElement('div');
+      questionDiv.textContent = it;
+      questionDiv.style.marginBottom = '0.6rem';
+      questionDiv.style.fontWeight = '500';
+      questionDiv.style.color = 'var(--text)';
+      li.appendChild(questionDiv);
+      
+      // Answer options (True/False buttons)
+      const answerDiv = document.createElement('div');
+      answerDiv.style.display = 'flex';
+      answerDiv.style.gap = '0.5rem';
+      answerDiv.style.marginBottom = '0.6rem';
+      
+      const trueBtn = document.createElement('button');
+      trueBtn.type = 'button';
+      trueBtn.textContent = 'Correct';
+      trueBtn.style.padding = '0.4rem 0.8rem';
+      trueBtn.style.border = '2px solid var(--accent)';
+      trueBtn.style.borderRadius = '6px';
+      trueBtn.style.cursor = 'pointer';
+      trueBtn.style.background = 'transparent';
+      trueBtn.style.color = 'var(--accent)';
+      trueBtn.style.fontWeight = '600';
+      trueBtn.style.transition = 'all 0.2s ease;'
+      trueBtn.className = 'answer-btn-true';
+      trueBtn.dataset.index = idx;
+      
+      const falseBtn = document.createElement('button');
+      falseBtn.type = 'button';
+      falseBtn.textContent = 'Incorrect';
+      falseBtn.style.padding = '0.4rem 0.8rem';
+      falseBtn.style.border = '2px solid var(--danger)';
+      falseBtn.style.borderRadius = '6px';
+      falseBtn.style.cursor = 'pointer';
+      falseBtn.style.background = 'transparent';
+      falseBtn.style.color = 'var(--danger)';
+      falseBtn.style.fontWeight = '600';
+      falseBtn.style.transition = 'all 0.2s ease;'
+      falseBtn.className = 'answer-btn-false';
+      falseBtn.dataset.index = idx;
+      
+      answerDiv.appendChild(trueBtn);
+      answerDiv.appendChild(falseBtn);
+      li.appendChild(answerDiv);
+      
+      // Notes textarea
+      const notesLabel = document.createElement('label');
+      notesLabel.textContent = 'Notes:';
+      notesLabel.style.display = 'block';
+      notesLabel.style.fontSize = '0.85rem';
+      notesLabel.style.color = 'var(--muted)';
+      notesLabel.style.marginBottom = '0.3rem';
+      notesLabel.style.fontWeight = '500';
+      li.appendChild(notesLabel);
+      
+      const notesTextarea = document.createElement('textarea');
+      notesTextarea.placeholder = 'Add notes or observations...';
+      notesTextarea.style.width = '100%';
+      notesTextarea.style.padding = '0.5rem';
+      notesTextarea.style.borderRadius = '6px';
+      notesTextarea.style.border = '1px solid var(--input-border)';
+      notesTextarea.style.backgroundColor = 'var(--input-bg)';
+      notesTextarea.style.color = 'var(--input-text)';
+      notesTextarea.style.fontSize = '0.9rem';
+      notesTextarea.style.fontFamily = 'inherit';
+      notesTextarea.style.resize = 'vertical';
+      notesTextarea.style.minHeight = '60px';
+      notesTextarea.style.transition = 'border-color 0.12s ease, box-shadow 0.12s ease;'
+      notesTextarea.className = 'question-notes';
+      notesTextarea.dataset.index = idx;
+      li.appendChild(notesTextarea);
+      
+      ol.appendChild(li);
+    });
+    
+    // Show action buttons (Copy & Export PDF) if there are questions
+    const copyBtn = document.getElementById('copyBtn');
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
+    if(copyBtn) copyBtn.style.display = items.length > 0 ? 'block' : 'none';
+    if(exportPdfBtn) exportPdfBtn.style.display = items.length > 0 ? 'block' : 'none';
+    
+    // Wire up True/False button click handlers
+    document.querySelectorAll('.answer-btn-true').forEach(btn => {
+      btn.addEventListener('click', function(){
+        const idx = this.dataset.index;
+        const trueBtnGroup = document.querySelectorAll(`.answer-btn-true[data-index="${idx}"]`);
+        const falseBtnGroup = document.querySelectorAll(`.answer-btn-false[data-index="${idx}"]`);
+        
+        trueBtnGroup.forEach(b => {
+          b.style.background = 'var(--accent)';
+          b.style.color = '#fff';
+          b.style.boxShadow = '0 0 10px rgba(11, 102, 194, 0.4)';
+        });
+        falseBtnGroup.forEach(b => {
+          b.style.background = 'transparent';
+          b.style.color = 'var(--danger)';
+          b.style.boxShadow = 'none';
+        });
+      });
+    });
+    
+    document.querySelectorAll('.answer-btn-false').forEach(btn => {
+      btn.addEventListener('click', function(){
+        const idx = this.dataset.index;
+        const trueBtnGroup = document.querySelectorAll(`.answer-btn-true[data-index="${idx}"]`);
+        const falseBtnGroup = document.querySelectorAll(`.answer-btn-false[data-index="${idx}"]`);
+        
+        trueBtnGroup.forEach(b => {
+          b.style.background = 'transparent';
+          b.style.color = 'var(--accent)';
+          b.style.boxShadow = 'none';
+        });
+        falseBtnGroup.forEach(b => {
+          b.style.background = 'var(--danger)';
+          b.style.color = '#fff';
+          b.style.boxShadow = '0 0 10px rgba(220, 53, 69, 0.4)';
+        });
+      });
+    });
+  }
+
+  function generateGoogleFormOutput(items){
+    const org = getSelectedOrg();
+    const applicantName = document.getElementById('applicantName').value || 'Not specified';
+    const applicationUrl = document.getElementById('applicationUrl') ? document.getElementById('applicationUrl').value || 'Not specified' : 'Not specified';
+    const curatorName = document.getElementById('curatorName').value || 'Not specified';
+    const seniorCuratorName = document.getElementById('seniorCuratorName').value || 'Not specified';
+    const timestamp = new Date().toLocaleString();
+    
+    // Collect answers and notes from the UI
+    const responses = [];
+    document.querySelectorAll('.question-notes').forEach((textarea, idx) => {
+      const trueBtnGroup = document.querySelectorAll(`.answer-btn-true[data-index="${idx}"]`);
+      const falseBtnGroup = document.querySelectorAll(`.answer-btn-false[data-index="${idx}"]`);
+      
+      let answer = '';
+      // Check if True button is selected (has blue background, not transparent)
+      if(trueBtnGroup.length > 0){
+        const trueBg = trueBtnGroup[0].style.background;
+        if(trueBg && (trueBg.includes('var(--accent)') || trueBg.includes('rgb(11, 102, 194)') || trueBg === 'var(--accent)')){
+          answer = 'Correct';
+        }
+      }
+      // Check if False button is selected (has red background, not transparent)
+      if(falseBtnGroup.length > 0){
+        const falseBg = falseBtnGroup[0].style.background;
+        if(falseBg && (falseBg.includes('var(--danger)') || falseBg.includes('rgb(220, 53, 69)') || falseBg === 'var(--danger)')){
+          answer = 'Incorrect';
+        }
+      }
+      
+      responses.push({
+        answer: answer,
+        notes: textarea.value.trim()
+      });
+    });
+    
+    // Create HTML content for PDF -- include styles to avoid page-breaks inside question blocks
+    let htmlContent = `
+      <div style="font-family: Arial, sans-serif; color: #e0e0e0; font-size: 12px; line-height: 1.4; margin: 0; padding: 0; background-color: #1a1a1a; width: 100%; min-height: 100vh;">
+        <style>
+          html { background-color: #1a1a1a; }
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body { background-color: #1a1a1a; }
+          
+          .header-wrap { text-align: center; border-bottom: 4px solid #0b66c2; padding: 4px 0 6px 0; margin-bottom: 8px; page-break-inside: avoid; background-color: #1a1a1a; }
+          .header-org { font-weight: 800; font-size: 22px; margin-right: 8px; vertical-align: middle; display: inline-block; color: #e0e0e0; }
+          .header-verb { font-weight: 900; text-transform: uppercase; letter-spacing: 2px; font-size: 22px; vertical-align: middle; display: inline-block; color: #0b66c2; }
+          
+          .questions { margin: 0; padding: 0; background-color: #1a1a1a; }
+          .question-block { display: block; margin-bottom: 10px; padding: 0; page-break-inside: avoid; background-color: #252525; border-radius: 4px; padding: 8px; border-left: 3px solid #0b66c2; }
+          .question-num { font-weight: bold; color: #0b66c2; font-size: 12px; margin-bottom: 3px; display: block; }
+          .question-text { font-size: 12px; line-height: 1.4; margin-bottom: 4px; padding: 0; color: #e0e0e0; }
+          .answer-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0; }
+          .answer-pill { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+          .notes-block { font-size: 11px; color: #a0a0a0; padding: 4px; background-color: #1f1f1f; border-radius: 4px; border-left: 3px solid #0b66c2; margin-top: 3px; page-break-inside: avoid; }
+          
+          .summary-block { margin-top: 12px; padding: 12px; background: linear-gradient(135deg, #0b66c2 0%, #0950a0 100%); border: none; border-radius: 8px; page-break-inside: avoid; color: white; }
+          .summary-block h2 { margin: 0 0 10px 0; font-size: 16px; color: white; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+          .summary-block table { width: 100%; border-collapse: collapse; font-size: 11px; }
+          .summary-block td { padding: 6px 4px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+          .summary-block td:first-child { font-weight: 600; width: 50%; }
+          .summary-block td:last-child { text-align: right; }
+          .summary-block strong { color: #fff; font-weight: 700; }
+          .summary-stat-row { background: rgba(255, 255, 255, 0.1); padding: 4px 4px; }
+          .summary-stat-row td { border: none; padding: 4px 4px; }
+          table { width: 100%; border-collapse: collapse; font-size: 11px; }
+          td { padding: 3px 4px; border-bottom: 1px solid #333; }
+        </style>
+        <div class="header-wrap"><span class="header-org">${org}</span><span class="header-verb">INTERVIEW</span></div>
+        <div class="questions">
+    `;
+    
+    // Add each question with answer and notes
+    items.forEach((q, idx) => {
+      const answer = responses[idx] ? responses[idx].answer : '';
+      const notes = responses[idx] ? responses[idx].notes : '';
+      // Remove common "true/false/notes" or "correct/incorrect/notes" markers (different formats) from the end of the question
+      const cleanedQuestion = q.replace(/\s*(?:[:\-–—])?\s*(?:true\s*(?:\/|\s)?\s*false\s*(?:\/|\s)?\s*notes|truefalsenotes|correct\s*(?:\/|\s)?\s*incorrect\s*(?:\/|\s)?\s*notes|correctincorrectnotes)\s*[:;\.\-–—]*\s*$/i, '').trim();
+      const answerStyle = answer === 'Correct' ? 'background-color: rgba(11, 102, 194, 0.3); color: #4da6ff; border: 1px solid #0b66c2;' 
+             : answer === 'Incorrect' ? 'background-color: rgba(220, 53, 69, 0.3); color: #ff6b6b; border: 1px solid #dc3545;'
+             : 'background-color: rgba(100, 100, 100, 0.2); color: #aaa; border: 1px solid #555;';
+      
+      htmlContent += `
+        <div class="question-block">
+          <div class="question-num">Question ${idx + 1}</div>
+          <div class="question-text">${cleanedQuestion}</div>
+          <div class="answer-row">
+            <div style="flex: 1;"></div>
+            <div class="answer-pill" style="${answerStyle}">${answer || '·'}</div>
+          </div>
+          ${notes ? `<div class="notes-block"><strong>Notes:</strong> ${notes}</div>` : ''}
+        </div>
+      `;
+    });
+    
+    // Add summary
+    const correctCount = responses.filter(r => r.answer === 'Correct').length;
+    const incorrectCount = responses.filter(r => r.answer === 'Incorrect').length;
+    const unansweredCount = responses.filter(r => r.answer === '').length;
+    
+    htmlContent += `
+        </div>
+        <div class="summary-block">
+          <h2>Summary</h2>
+          <table>
+            <tr><td>Applicant</td><td><strong>${applicantName || 'Not specified'}</strong></td></tr>
+            <tr><td>Application URL</td><td><strong>${applicationUrl && applicationUrl !== 'Not specified' ? applicationUrl : 'Not specified'}</strong></td></tr>
+            <tr><td>Curator</td><td><strong>${curatorName}</strong></td></tr>
+            <tr><td>Senior Curator</td><td><strong>${seniorCuratorName}</strong></td></tr>
+            <tr class="summary-stat-row"><td>Total Questions</td><td><strong>${items.length}</strong></td></tr>
+            <tr class="summary-stat-row"><td>Correct Answers</td><td><strong>${correctCount}</strong></td></tr>
+            <tr class="summary-stat-row"><td>Incorrect Answers</td><td><strong>${incorrectCount}</strong></td></tr>
+            <tr class="summary-stat-row"><td>Unanswered</td><td><strong>${unansweredCount}</strong></td></tr>
+          </table>
+        </div>
+      </div>
+    `;
+    
+    // Generate PDF using html2pdf
+    const element = document.createElement('div');
+    element.innerHTML = htmlContent;
+    
+    const opt = {
+      margin: 10,
+      filename: `${org}_interview_${applicantName.replace(/\s+/g, '_')}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+
+  // Wire up buttons and loading state
+  (function(){
+    const btn = document.getElementById('generateBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
+    if(!btn) return;
+
+    // Enable/disable generate button depending on whether an organization is selected
+    function updateGenerateState(){
+      const sel = document.getElementById('orgSelect');
+      const cur = (sel && sel.value) ? sel.value : '';
+      if(!cur){ btn.disabled = true; btn.classList.add('disabled'); btn.setAttribute('aria-disabled','true'); }
+      else { btn.disabled = false; btn.classList.remove('disabled'); btn.removeAttribute('aria-disabled'); }
+      // after toggling, recompute scale to keep layout consistent
+      if(window.adjustPageScale) window.adjustPageScale();
+    }
+
+    // Initialize state
+    updateGenerateState();
+
+    // Wire native select to update state when changed
+    const nativeSelect = document.getElementById('orgSelect');
+    if(nativeSelect) nativeSelect.addEventListener('change', ()=> updateGenerateState());
+
+    btn.addEventListener('click', async ()=>{
+      if(btn.classList.contains('loading')) return;
+      btn.classList.add('loading'); btn.setAttribute('aria-busy','true');
+      const spinner = btn.querySelector('.btn-spinner');
+      const text = btn.querySelector('.btn-text');
+      if(spinner) spinner.style.display = 'inline-block';
+      if(text) text.textContent = 'Generating...';
+
+      // small delay to show loading spinner (keeps UX smooth)
+      await new Promise(r=>setTimeout(r, 600));
+
+      const items = generateQuestions();
+      renderList(items);
+
+      if(spinner) spinner.style.display = 'none';
+      if(text) text.textContent = 'Generate Questions';
+      btn.classList.remove('loading'); btn.removeAttribute('aria-busy');
+      // ensure generate remains disabled if org cleared
+      updateGenerateState();
+    });
+
+    // Copy button: copy questions text to clipboard
+    if(copyBtn){
+      copyBtn.addEventListener('click', async ()=>{
+        try{
+          const items = Array.from(document.getElementById('generated-list').querySelectorAll('li')).map((li, idx) => {
+            const questionDiv = li.querySelector('div:first-child');
+            return questionDiv ? (idx + 1) + '. ' + questionDiv.textContent : '';
+          }).filter(q => q);
+          
+          if(items.length === 0){
+            alert('No questions to copy.');
+            return;
+          }
+          
+          const textToCopy = items.join('\n\n');
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            await navigator.clipboard.writeText(textToCopy);
+            // Visual feedback: briefly change button text
+            const originalText = copyBtn.querySelector('.btn-text');
+            if(originalText){
+              const origContent = originalText.textContent;
+              originalText.textContent = 'Copied!';
+              setTimeout(()=>{ originalText.textContent = origContent; }, 2000);
+            }
+          } else {
+            // Fallback for older browsers
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            const originalText = copyBtn.querySelector('.btn-text');
+            if(originalText){
+              const origContent = originalText.textContent;
+              originalText.textContent = 'Copied!';
+              setTimeout(()=>{ originalText.textContent = origContent; }, 2000);
+            }
+          }
+        } catch(err){
+          console.error('Copy failed:', err);
+          alert('Failed to copy to clipboard.');
+        }
+      });
+    }
+
+    // Export PDF button: export questions as PDF
+    if(exportPdfBtn){
+      exportPdfBtn.addEventListener('click', ()=>{
+        const items = Array.from(document.getElementById('generated-list').querySelectorAll('li')).map(li => li.textContent);
+        if(items.length === 0){
+          alert('No questions generated. Please generate questions first.');
+          return;
+        }
+        generateGoogleFormOutput(items);
+      });
+    }
+    // File loader / export / print removed
+
+    // Keyboard navigation for the quality radio group (Left/Right arrows)
+    try{
+      const rg = document.querySelector('.quality-options[role="radiogroup"]');
+      if(rg){
+        rg.addEventListener('keydown', (e)=>{
+          const radios = Array.from(document.querySelectorAll('input[name="quality"]'));
+          const current = radios.findIndex(r=>r.checked);
+          if(current === -1) return;
+          if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+            e.preventDefault();
+            const next = radios[(current + 1) % radios.length]; next.checked = true; next.dispatchEvent(new Event('change')); next.focus();
+          } else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+            e.preventDefault();
+            const prev = radios[(current - 1 + radios.length) % radios.length]; prev.checked = true; prev.dispatchEvent(new Event('change')); prev.focus();
+          }
+        });
+        // Ensure labels are focusable for keyboard users
+        document.querySelectorAll('.quality-options label').forEach(l=>{ l.tabIndex = 0; l.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); const id = l.getAttribute('for'); const inp = document.getElementById(id); if(inp){ inp.checked = true; inp.dispatchEvent(new Event('change')); inp.focus(); } } }); });
+      }
+    }catch(e){ /* ignore */ }
+  })();
+
+  // ==================== CURATOR SYNC LISTENER ====================
+  // Listen for curator database changes from the admin panel
+  window.addEventListener('curatorDbChanged', (e) => {
+    console.log('Curator database updated, refreshing organization data');
+    const orgSelectEl = document.getElementById('orgSelect');
+    if (orgSelectEl && orgSelectEl.value) {
+      applyOrgBank();
+    }
+  });
+
+  // Listen for localStorage changes from other tabs (admin panel updates)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'curators_database_v2') {
+      console.log('Curator database changed in another tab, syncing...');
+      const orgSelectEl = document.getElementById('orgSelect');
+      if (orgSelectEl && orgSelectEl.value) {
+        applyOrgBank();
+      }
+    }
+  });
+</script>
+
+
+</body>
+</html>
